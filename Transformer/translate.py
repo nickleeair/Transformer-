@@ -57,7 +57,10 @@ def translate(opt, model, SRC, TRG, references):
     translated = []
 
     for sentence in sentences:
-        translated.append(translate_sentence(sentence + '.', model, opt, SRC, TRG).capitalize())
+        if sentence.strip() != '':
+            if not sentence.strip().endswith('.'):
+                sentence += '.'
+            translated.append(translate_sentence(sentence, model, opt, SRC, TRG).capitalize())
     
 
     return (' '.join(translated))
@@ -89,7 +92,7 @@ def main():
     model = get_model(opt, len(SRC.vocab), len(TRG.vocab))
     #scorer = lmppl.LM('gpt2')
 
-    references = ["Est-ce une idée raisonnable ?","Est-ce une idée judicieuse ?","Est-ce une idée raisonnablement envisageable ?"]
+    references = ["je suis heureux que vous l'ayez apprécié."]
     
     while True:
         opt.text =input("Enter a sentence to translate (type 'f' to load from file, or 'q' to quit):\n")
